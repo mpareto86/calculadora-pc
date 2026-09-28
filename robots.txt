@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mpareto86.github.io/calculadora-pc/sitemap.xml
