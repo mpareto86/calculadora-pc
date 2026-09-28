@@ -1,0 +1,1658 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculadora de Consumo de Energia do PC | Quanto Gasta?</title>
+
+<meta
+name="description"
+content="Descubra quanto seu PC ou notebook gasta de energia. Calcule o custo por hora, dia, mês e ano e veja quanto custa jogar no seu computador."
+>
+
+<meta
+name="keywords"
+content="calculadora consumo PC, consumo de energia PC, quanto PC gasta de energia, custo PC gamer, quanto custa jogar PC, calculadora kWh"
+>
+
+<style>
+
+/* =========================================
+   BASE
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    margin: 0;
+
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background: #f5f7fa;
+
+    color: #17202a;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+header {
+
+    background: #111827;
+
+    color: white;
+
+    padding: 45px 20px 55px;
+
+    text-align: center;
+}
+
+.header-container {
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+header h1 {
+
+    margin: 0 0 12px;
+
+    font-size:
+        clamp(2rem, 5vw, 3.2rem);
+
+    line-height: 1.15;
+}
+
+header p {
+
+    margin: 0 auto;
+
+    max-width: 680px;
+
+    color: #d1d5db;
+
+    font-size: 1.08rem;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.container {
+
+    width:
+        min(960px, calc(100% - 32px));
+
+    margin: -30px auto 50px;
+
+    position: relative;
+}
+
+
+/* =========================================
+   CARDS
+========================================= */
+
+.card {
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    padding: 28px;
+
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.05);
+}
+
+.card h2 {
+
+    margin-top: 0;
+
+    margin-bottom: 20px;
+
+    font-size: 1.35rem;
+}
+
+
+/* =========================================
+   CALCULADORA
+========================================= */
+
+.calculator-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.field {
+
+    margin-bottom: 4px;
+}
+
+label {
+
+    display: block;
+
+    font-weight: 700;
+
+    margin-bottom: 7px;
+}
+
+input {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border:
+        1px solid #cbd5e1;
+
+    border-radius: 9px;
+
+    font-size: 16px;
+
+    background: white;
+}
+
+input:focus {
+
+    outline: 3px solid
+        rgba(37,99,235,0.15);
+
+    border-color: #2563eb;
+}
+
+.help {
+
+    margin: 5px 0 0;
+
+    color: #6b7280;
+
+    font-size: 0.86rem;
+}
+
+
+/* =========================================
+   BOTÕES
+========================================= */
+
+button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 14px;
+
+    margin-top: 20px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+button:hover {
+
+    background: #1d4ed8;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================
+   RESULTADOS
+========================================= */
+
+.results {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-top: 22px;
+}
+
+.result {
+
+    padding: 18px;
+
+    border-radius: 11px;
+
+    background: #f8fafc;
+
+    border:
+        1px solid #e2e8f0;
+}
+
+.result-label {
+
+    display: block;
+
+    color: #64748b;
+
+    font-size: 0.9rem;
+}
+
+.result-value {
+
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 1.45rem;
+
+    font-weight: 800;
+}
+
+.result.highlight {
+
+    background: #eff6ff;
+
+    border-color: #bfdbfe;
+}
+
+
+/* =========================================
+   GAMING
+========================================= */
+
+.gaming {
+
+    border-top:
+        4px solid #2563eb;
+}
+
+.gaming-intro {
+
+    color: #64748b;
+
+    margin-top: -8px;
+
+    margin-bottom: 20px;
+}
+
+.main-result {
+
+    margin-top: 22px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    background: #eff6ff;
+
+    border:
+        1px solid #bfdbfe;
+
+    border-radius: 12px;
+}
+
+.main-result span {
+
+    display: block;
+
+    color: #64748b;
+}
+
+.main-result strong {
+
+    display: block;
+
+    font-size: 2.2rem;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================
+   COMPARAÇÃO
+========================================= */
+
+.comparison-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.comparison-box {
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    border:
+        1px solid #e2e8f0;
+}
+
+.comparison-box strong {
+
+    font-size: 1.2rem;
+}
+
+
+/* =========================================
+   CONTEÚDO
+========================================= */
+
+.content p {
+
+    color: #475569;
+
+    margin-bottom: 15px;
+}
+
+.content h3 {
+
+    margin-top: 28px;
+
+    margin-bottom: 8px;
+}
+
+.formula {
+
+    padding: 18px;
+
+    background: #f1f5f9;
+
+    border-radius: 10px;
+
+    font-family: monospace;
+
+    overflow-x: auto;
+}
+
+
+/* =========================================
+   FAQ
+========================================= */
+
+.faq-item {
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    padding: 17px 0;
+}
+
+.faq-item:last-child {
+
+    border-bottom: none;
+}
+
+.faq-question {
+
+    font-weight: 750;
+
+    margin-bottom: 6px;
+}
+
+.faq-answer {
+
+    color: #64748b;
+}
+
+
+/* =========================================
+   AVISO
+========================================= */
+
+.warning {
+
+    margin-top: 18px;
+
+    padding: 15px;
+
+    border-radius: 9px;
+
+    background: #fff7ed;
+
+    border:
+        1px solid #fed7aa;
+
+    color: #7c2d12;
+
+    font-size: 0.92rem;
+}
+
+
+/* =========================================
+   RODAPÉ
+========================================= */
+
+footer {
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 0.85rem;
+
+    padding: 25px 0 10px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .container {
+
+        width:
+            min(100% - 20px, 960px);
+
+        margin-top: -20px;
+    }
+
+    .calculator-grid,
+    .results,
+    .comparison-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+
+        padding: 21px;
+    }
+
+    header {
+
+        padding:
+            35px 15px 45px;
+    }
+
+    header h1 {
+
+        font-size: 2rem;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ======================================
+     CABEÇALHO
+======================================= -->
+
+<header>
+
+<div class="header-container">
+
+<h1>
+Calculadora de Consumo de Energia do PC
+</h1>
+
+<p>
+Descubra quanto seu computador consome de energia,
+quanto custa por hora e quanto isso representa
+na sua conta de luz.
+</p>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- ======================================
+     CALCULADORA PRINCIPAL
+======================================= -->
+
+<section class="card">
+
+<h2>⚡ Calcule o consumo do seu computador</h2>
+
+<div class="calculator-grid">
+
+
+<div class="field">
+
+<label for="watts">
+Consumo médio do PC (W)
+</label>
+
+<input
+type="number"
+id="watts"
+value="500"
+min="0"
+step="1"
+>
+
+<p class="help">
+Use uma estimativa do consumo médio do computador.
+</p>
+
+</div>
+
+
+<div class="field">
+
+<label for="monitor">
+Consumo do monitor (W)
+</label>
+
+<input
+type="number"
+id="monitor"
+value="30"
+min="0"
+step="1"
+>
+
+<p class="help">
+Se não souber, 30 W é uma estimativa razoável para um monitor comum.
+</p>
+
+</div>
+
+
+<div class="field">
+
+<label for="hours">
+Horas de uso por dia
+</label>
+
+<input
+type="number"
+id="hours"
+value="5"
+min="0"
+step="0.1"
+>
+
+</div>
+
+
+<div class="field">
+
+<label for="days">
+Dias de uso por mês
+</label>
+
+<input
+type="number"
+id="days"
+value="30"
+min="0"
+step="1"
+>
+
+</div>
+
+
+<div class="field">
+
+<label for="price">
+Preço da energia (R$/kWh)
+</label>
+
+<input
+type="number"
+id="price"
+value="0.90"
+min="0"
+step="0.01"
+>
+
+<p class="help">
+Confira o valor do kWh na sua conta de energia.
+</p>
+
+</div>
+
+
+</div>
+
+
+<button id="calculateButton">
+Calcular consumo
+</button>
+
+
+<div class="results">
+
+
+<div class="result">
+
+<span class="result-label">
+Consumo por hora
+</span>
+
+<strong
+class="result-value"
+id="hourlyKwh"
+>
+0 kWh
+</strong>
+
+</div>
+
+
+<div class="result">
+
+<span class="result-label">
+Custo por hora
+</span>
+
+<strong
+class="result-value"
+id="hourlyCost"
+>
+R$ 0,00
+</strong>
+
+</div>
+
+
+<div class="result">
+
+<span class="result-label">
+Consumo por dia
+</span>
+
+<strong
+class="result-value"
+id="dailyKwh"
+>
+0 kWh
+</strong>
+
+</div>
+
+
+<div class="result">
+
+<span class="result-label">
+Consumo por mês
+</span>
+
+<strong
+class="result-value"
+id="monthlyKwh"
+>
+0 kWh
+</strong>
+
+</div>
+
+
+<div class="result highlight">
+
+<span class="result-label">
+Custo mensal estimado
+</span>
+
+<strong
+class="result-value"
+id="monthlyCost"
+>
+R$ 0,00
+</strong>
+
+</div>
+
+
+<div class="result highlight">
+
+<span class="result-label">
+Custo anual estimado
+</span>
+
+<strong
+class="result-value"
+id="annualCost"
+>
+R$ 0,00
+</strong>
+
+</div>
+
+
+</div>
+
+
+<div class="warning">
+
+<strong>Importante:</strong>
+a potência indicada na fonte do PC não significa
+que ele consome essa quantidade constantemente.
+O consumo real varia conforme CPU, GPU,
+monitor e nível de utilização.
+
+</div>
+
+</section>
+
+
+
+<!-- ======================================
+     GAMING
+======================================= -->
+
+<section class="card gaming">
+
+<h2>🎮 Quanto custa jogar no meu PC?</h2>
+
+<p class="gaming-intro">
+Descubra quanto uma sessão de jogos custa na sua conta
+de luz e estime o gasto semanal, mensal e anual.
+</p>
+
+
+<div class="calculator-grid">
+
+
+<div class="field">
+
+<label for="gamingWatts">
+Consumo do PC durante jogos (W)
+</label>
+
+<input
+type="number"
+id="gamingWatts"
+value="400"
+min="0"
+>
+
+</div>
+
+
+<div class="field">
+
+<label for="gamingMonitor">
+Consumo do monitor (W)
+</label>
+
+<input
+type="number"
+id="gamingMonitor"
+value="30"
+min="0"
+>
+
+</div>
+
+
+<div class="field">
+
+<label for="sessionHours">
+Horas por sessão
+</label>
+
+<input
+type="number"
+id="sessionHours"
+value="5"
+min="0"
+step="0.1"
+>
+
+</div>
+
+
+<div class="field">
+
+<label for="sessionsWeek">
+Sessões por semana
+</label>
+
+<input
+type="number"
+id="sessionsWeek"
+value="7"
+min="0"
+step="0.1"
+>
+
+</div>
+
+
+</div>
+
+
+<button id="gamingButton">
+Calcular custo para jogar
+</button>
+
+
+<div class="main-result">
+
+<span>
+Custo aproximado por sessão
+</span>
+
+<strong id="sessionCost">
+R$ 0,00
+</strong>
+
+</div>
+
+
+<div class="results">
+
+
+<div class="result">
+
+<span class="result-label">
+Horas jogadas por semana
+</span>
+
+<strong
+class="result-value"
+id="weeklyHours"
+>
+0 h
+</strong>
+
+</div>
+
+
+<div class="result">
+
+<span class="result-label">
+Custo por semana
+</span>
+
+<strong
+class="result-value"
+id="weeklyCost"
+>
+R$ 0,00
+</strong>
+
+</div>
+
+
+<div class="result">
+
+<span class="result-label">
+Horas jogadas por mês
+</span>
+
+<strong
+class="result-value"
+id="monthlyGamingHours"
+>
+0 h
+</strong>
+
+</div>
+
+
+<div class="result">
+
+<span class="result-label">
+Custo por mês
+</span>
+
+<strong
+class="result-value"
+id="gamingMonthlyCost"
+>
+R$ 0,00
+</strong>
+
+</div>
+
+
+<div class="result highlight">
+
+<span class="result-label">
+Custo por ano
+</span>
+
+<strong
+class="result-value"
+id="gamingAnnualCost"
+>
+R$ 0,00
+</strong>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ======================================
+     COMPARAÇÃO
+======================================= -->
+
+<section class="card">
+
+<h2>💡 Uso leve x jogos</h2>
+
+<p class="content">
+Compare uma estimativa de consumo durante tarefas leves
+com o consumo durante jogos.
+</p>
+
+
+<div class="calculator-grid">
+
+
+<div class="field">
+
+<label for="lightWatts">
+Uso leve (W)
+</label>
+
+<input
+type="number"
+id="lightWatts"
+value="100"
+min="0"
+>
+
+</div>
+
+
+<div class="field">
+
+<label for="gamingCompareWatts">
+Jogos (W)
+</label>
+
+<input
+type="number"
+id="gamingCompareWatts"
+value="400"
+min="0"
+>
+
+</div>
+
+
+</div>
+
+
+<button id="comparisonButton">
+Comparar consumo
+</button>
+
+
+<div class="comparison-grid">
+
+
+<div class="comparison-box">
+
+<strong>
+💻 Uso leve
+</strong>
+
+<p id="lightCost">
+R$ 0,00 por mês
+</p>
+
+</div>
+
+
+<div class="comparison-box">
+
+<strong>
+🎮 Jogando
+</strong>
+
+<p id="gamingCost">
+R$ 0,00 por mês
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ======================================
+     CONTEÚDO SEO
+======================================= -->
+
+<section class="card content">
+
+<h2>
+Como calcular quanto um PC gasta de energia?
+</h2>
+
+<p>
+O consumo de energia de um computador depende principalmente
+da potência que ele realmente utiliza e do tempo que permanece ligado.
+</p>
+
+<p>
+A energia elétrica normalmente é cobrada em
+<strong>quilowatt-hora (kWh)</strong>.
+Para transformar watts em quilowatts, basta dividir a potência por 1.000.
+</p>
+
+
+<h3>
+Fórmula do consumo
+</h3>
+
+<div class="formula">
+
+Consumo (kWh) =
+Potência (W) ÷ 1000 × horas de uso
+
+</div>
+
+
+<h3>
+Como calcular o custo?
+</h3>
+
+<p>
+Depois de descobrir o consumo em kWh,
+multiplique pelo preço do kWh informado na sua conta de energia.
+</p>
+
+<div class="formula">
+
+Custo =
+Consumo (kWh) × preço do kWh
+
+</div>
+
+
+<h3>
+Uma fonte de 500 W significa que o PC gasta 500 W?
+</h3>
+
+<p>
+Não necessariamente.
+A potência indicada na fonte representa a capacidade que ela pode fornecer,
+e não necessariamente o consumo constante do computador.
+</p>
+
+<p>
+Um computador pode consumir muito menos energia em tarefas leves
+e aumentar o consumo quando processador e placa de vídeo estão sob carga.
+</p>
+
+
+<h3>
+Como descobrir o consumo real do PC?
+</h3>
+
+<p>
+A maneira mais precisa para um usuário doméstico é utilizar um
+medidor de consumo conectado entre a tomada e o equipamento.
+Assim é possível observar o consumo real do conjunto,
+em vez de estimá-lo apenas pela potência dos componentes.
+</p>
+
+
+<h3>
+O monitor também consome energia?
+</h3>
+
+<p>
+Sim.
+Por isso esta calculadora permite adicionar o consumo estimado do monitor
+ao consumo do computador.
+</p>
+
+</section>
+
+
+
+<!-- ======================================
+     EXEMPLO
+======================================= -->
+
+<section class="card content">
+
+<h2>
+Exemplo: quanto custa jogar 5 horas por dia?
+</h2>
+
+<p>
+Imagine um computador que consuma em média 400 W durante os jogos
+e um monitor de 30 W.
+O conjunto consumiria aproximadamente 430 W enquanto estivesse ligado.
+</p>
+
+<p>
+Se esse computador fosse utilizado durante 5 horas por dia,
+o consumo seria calculado com base nessas 5 horas e no preço do kWh
+da residência.
+</p>
+
+<p>
+Você pode alterar os valores na calculadora acima para descobrir
+o resultado para o seu próprio computador.
+</p>
+
+</section>
+
+
+
+<!-- ======================================
+     FAQ
+======================================= -->
+
+<section class="card">
+
+<h2>
+Perguntas frequentes
+</h2>
+
+
+<div class="faq-item">
+
+<div class="faq-question">
+Quanto um PC gamer gasta de energia?
+</div>
+
+<div class="faq-answer">
+Depende do hardware e da utilização.
+Um PC gamer pode consumir quantidades muito diferentes
+dependendo do processador, placa de vídeo e carga de trabalho.
+Use uma potência média na calculadora para obter uma estimativa.
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<div class="faq-question">
+Quanto custa deixar o PC ligado o dia inteiro?
+</div>
+
+<div class="faq-answer">
+Depende do consumo do computador e do preço do kWh.
+Informe 24 horas de uso diário na calculadora para obter uma estimativa.
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<div class="faq-question">
+Jogar aumenta muito o consumo de energia?
+</div>
+
+<div class="faq-answer">
+Pode aumentar.
+Durante jogos, processador e placa de vídeo podem trabalhar
+com uma carga maior do que durante tarefas leves,
+aumentando o consumo do computador.
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<div class="faq-question">
+O notebook gasta menos energia que um PC?
+</div>
+
+<div class="faq-answer">
+Em muitos casos, notebooks consomem menos energia porque seus componentes
+são projetados levando em consideração a eficiência e o funcionamento
+com bateria. Porém, o consumo varia conforme o modelo e a utilização.
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<div class="faq-question">
+A calculadora mostra o valor exato da conta de luz?
+</div>
+
+<div class="faq-answer">
+Não.
+Ela fornece uma estimativa baseada nos valores informados.
+A conta real pode incluir impostos, tarifas, bandeiras e outros componentes.
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+Calculadora de consumo de energia para PC e jogos.
+
+<br>
+
+Estimativas podem variar conforme o equipamento e as condições de uso.
+
+</footer>
+
+
+</main>
+
+
+
+<script>
+
+
+"use strict";
+
+
+/* =========================================
+   FUNÇÕES
+========================================= */
+
+
+function getNumber(id) {
+
+    const value =
+        Number(
+            document.getElementById(id).value
+        );
+
+    if (
+        !Number.isFinite(value) ||
+        value < 0
+    ) {
+
+        return 0;
+
+    }
+
+    return value;
+}
+
+
+function money(value) {
+
+    return value.toLocaleString(
+        "pt-BR",
+        {
+            style: "currency",
+            currency: "BRL"
+        }
+    );
+
+}
+
+
+/* =========================================
+   CALCULADORA PRINCIPAL
+========================================= */
+
+
+function calculate() {
+
+
+    const watts =
+        getNumber("watts");
+
+
+    const monitor =
+        getNumber("monitor");
+
+
+    const hours =
+        getNumber("hours");
+
+
+    const days =
+        getNumber("days");
+
+
+    const price =
+        getNumber("price");
+
+
+    const totalWatts =
+        watts + monitor;
+
+
+    const hourlyKwh =
+        totalWatts / 1000;
+
+
+    const hourlyCost =
+        hourlyKwh * price;
+
+
+    const dailyKwh =
+        hourlyKwh * hours;
+
+
+    const monthlyKwh =
+        dailyKwh * days;
+
+
+    const monthlyCost =
+        monthlyKwh * price;
+
+
+    const annualCost =
+        monthlyCost * 12;
+
+
+    document.getElementById(
+        "hourlyKwh"
+    ).textContent =
+        hourlyKwh.toFixed(3) +
+        " kWh";
+
+
+    document.getElementById(
+        "hourlyCost"
+    ).textContent =
+        money(hourlyCost);
+
+
+    document.getElementById(
+        "dailyKwh"
+    ).textContent =
+        dailyKwh.toFixed(3) +
+        " kWh";
+
+
+    document.getElementById(
+        "monthlyKwh"
+    ).textContent =
+        monthlyKwh.toFixed(2) +
+        " kWh";
+
+
+    document.getElementById(
+        "monthlyCost"
+    ).textContent =
+        money(monthlyCost);
+
+
+    document.getElementById(
+        "annualCost"
+    ).textContent =
+        money(annualCost);
+
+}
+
+
+/* =========================================
+   GAMING
+========================================= */
+
+
+function calculateGaming() {
+
+
+    const gamingWatts =
+        getNumber("gamingWatts");
+
+
+    const gamingMonitor =
+        getNumber("gamingMonitor");
+
+
+    const sessionHours =
+        getNumber("sessionHours");
+
+
+    const sessionsWeek =
+        getNumber("sessionsWeek");
+
+
+    const price =
+        getNumber("price");
+
+
+    const totalWatts =
+        gamingWatts +
+        gamingMonitor;
+
+
+    const kwhPerHour =
+        totalWatts / 1000;
+
+
+    const sessionCost =
+        kwhPerHour *
+        sessionHours *
+        price;
+
+
+    const weeklyHours =
+        sessionHours *
+        sessionsWeek;
+
+
+    const weeklyCost =
+        sessionCost *
+        sessionsWeek;
+
+
+    const monthlyHours =
+        weeklyHours *
+        (52 / 12);
+
+
+    const monthlyCost =
+        weeklyCost *
+        (52 / 12);
+
+
+    const annualCost =
+        weeklyCost *
+        52;
+
+
+    document.getElementById(
+        "sessionCost"
+    ).textContent =
+        money(sessionCost);
+
+
+    document.getElementById(
+        "weeklyHours"
+    ).textContent =
+        weeklyHours.toFixed(1) +
+        " h";
+
+
+    document.getElementById(
+        "weeklyCost"
+    ).textContent =
+        money(weeklyCost);
+
+
+    document.getElementById(
+        "monthlyGamingHours"
+    ).textContent =
+        monthlyHours.toFixed(1) +
+        " h";
+
+
+    document.getElementById(
+        "gamingMonthlyCost"
+    ).textContent =
+        money(monthlyCost);
+
+
+    document.getElementById(
+        "gamingAnnualCost"
+    ).textContent =
+        money(annualCost);
+
+}
+
+
+/* =========================================
+   COMPARAÇÃO
+========================================= */
+
+
+function calculateComparison() {
+
+
+    const lightWatts =
+        getNumber("lightWatts");
+
+
+    const gamingWatts =
+        getNumber("gamingCompareWatts");
+
+
+    const hours =
+        getNumber("hours");
+
+
+    const days =
+        getNumber("days");
+
+
+    const price =
+        getNumber("price");
+
+
+    const lightCost =
+        (lightWatts / 1000) *
+        hours *
+        days *
+        price;
+
+
+    const gamingCost =
+        (gamingWatts / 1000) *
+        hours *
+        days *
+        price;
+
+
+    document.getElementById(
+        "lightCost"
+    ).textContent =
+        money(lightCost) +
+        " por mês";
+
+
+    document.getElementById(
+        "gamingCost"
+    ).textContent =
+        money(gamingCost) +
+        " por mês";
+
+}
+
+
+/* =========================================
+   BOTÕES
+========================================= */
+
+
+document
+    .getElementById("calculateButton")
+    .addEventListener(
+        "click",
+        calculate
+    );
+
+
+document
+    .getElementById("gamingButton")
+    .addEventListener(
+        "click",
+        calculateGaming
+    );
+
+
+document
+    .getElementById("comparisonButton")
+    .addEventListener(
+        "click",
+        calculateComparison
+    );
+
+
+/* =========================================
+   RESULTADO INICIAL
+========================================= */
+
+
+calculate();
+
+calculateGaming();
+
+calculateComparison();
+
+
+</script>
+
+
+</body>
+
+</html>
+```
+
